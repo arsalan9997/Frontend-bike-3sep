@@ -102,5 +102,27 @@ pipeline {
         always {
             echo "Jenkins Build: ${BUILD_NUMBER}"
         }
+
+        stage('Deploy to EC2') {
+    steps {
+        echo 'Deploying application to EC2...'
+
+        sh '''
+            ssh -o StrictHostKeyChecking=no ubuntu@YOUR_EC2_PUBLIC_IP "
+                docker pull tops069/bike-showroom:latest &&
+                docker stop bike-showroom || true &&
+                docker rm bike-showroom || true &&
+                docker run -d \
+                    --name bike-showroom \
+                    -p 3000:3000 \
+                    --restart unless-stopped \
+                    tops069/bike-showroom:latest
+            "
+        '''
+    }
+}
+
+        
+        
     }
 }
