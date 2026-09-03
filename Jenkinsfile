@@ -88,7 +88,7 @@ pipeline {
                 echo 'Deploying application to EC2...'
 
                 sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@YOUR_EC2_PUBLIC_IP "
+                    ssh -o StrictHostKeyChecking=no ubuntu@100.54.69.23"
                         docker pull tops069/bike-showroom:latest &&
                         docker stop bike-showroom || true &&
                         docker rm bike-showroom || true &&
